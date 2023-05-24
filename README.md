@@ -6,7 +6,7 @@ POC: This multi-tenant solution should be able to sync a local database with its
 
 - Create Cloud Database configuration for new users automatically
 - Authenticate incoming requests and pick the correct database connection
-- Replicate changes between the Clouda DB and the Local DB bidirectionally
+- Replicate changes between the Cloud DB and the Local DB bidirectionally
 
 ### Diagram
 
@@ -14,8 +14,8 @@ POC: This multi-tenant solution should be able to sync a local database with its
 flowchart TB
   API((API))
   MetadataDb[(Metadata)]
-	TenantA[[Tenant A]]
-	TenantB[[Tenant B]]
+  TenantA[[Tenant A]]
+  TenantB[[Tenant B]]
   CloudDbA[(Cloud A)]
   CloudDbB[(Cloud B)]
   ClientA1[Client A1]
@@ -25,13 +25,13 @@ flowchart TB
   ClientB2[Client B2]
   LocalDbB[(Local B)]
 
-	TenantA === ClientA1
-	TenantA === ClientA2
+  TenantA === ClientA1
+  TenantA === ClientA2
   ClientA1 <--> LocalDbA
   ClientA2 <--> LocalDbA
 
-	TenantB === ClientB1
-	TenantB === ClientB2
+  TenantB === ClientB1
+  TenantB === ClientB2
   ClientB1 <--> LocalDbB
   ClientB2 <--> LocalDbB
 
