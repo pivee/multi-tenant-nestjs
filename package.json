@@ -19,7 +19,10 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:main:push": "prisma db push",
-    "prisma:tenant:push": "prisma db push --schema prisma/tenant-schema.prisma"
+    "prisma:main:generate": "prisma generate",
+    "prisma:tenant:push": "prisma db push --schema prisma/tenant-schema.prisma",
+    "prisma:tenant:generate": "prisma generate --schema prisma/tenant-schema.prisma",
+    "postinstall": "pnpm prisma:main:generate && pnpm prisma:tenant:generate"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
