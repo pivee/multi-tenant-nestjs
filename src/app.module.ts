@@ -3,10 +3,12 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TerminusModule } from '@nestjs/terminus';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PrismaModule } from './modules/prisma/prisma.module';
 
 @Module({
   imports: [
     TerminusModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

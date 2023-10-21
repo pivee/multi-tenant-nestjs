@@ -1,0 +1,2 @@
+GET http://localhost:3000/test
+x-tenant-code: tenant_1
