@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import * as metadata from 'package.json'
+import { HealthCheckService } from '@nestjs/terminus';
 
 @Injectable()
 export class AppService {
+  constructor(private health: HealthCheckService){}
+  
   getHealthcheck() {
-    return {
-      name: metadata.name,
-      version: metadata.version,
-      environment: process.env.NODE_ENV,
-    };
+    return this.health.check([]);
   }
 }

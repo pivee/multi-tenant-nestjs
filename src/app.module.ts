@@ -1,10 +1,13 @@
+import { RequestLoggerMiddleware } from '@/middlewares/request-logger/request-logger.middleware';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { TerminusModule } from '@nestjs/terminus';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RequestLoggerMiddleware } from './middlewares/request-logger/request-logger.middleware';
 
 @Module({
-  imports: [],
+  imports: [
+    TerminusModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
