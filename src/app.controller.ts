@@ -7,7 +7,11 @@ import { TENANT_PRISMA_SERVICE, TenantPrismaService } from './modules/prisma/ten
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private readonly mainPrisma: MainPrismaService, @Inject(TENANT_PRISMA_SERVICE) private readonly tenantPrisma: TenantPrismaService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly mainPrisma: MainPrismaService,
+    @Inject(TENANT_PRISMA_SERVICE) private readonly tenantPrisma: TenantPrismaService
+  ) {}
 
   @Get()
   @HealthCheck()
@@ -23,8 +27,15 @@ export class AppController {
     return { app, ...healthcheck };
   }
 
-  @Get('/test')
-  async testDbConnections() {
+  @Get('/tenants')
+  async getTenants() {
+    const tenants = await this.mainPrisma.tenant.findMany();
+  
+    return { tenants };
+  }
+
+  @Get('/users')
+  async getUsers() {
     /**
      * Since we're using query extensions with the Prisma client,
      * this query should return only the users with the column
