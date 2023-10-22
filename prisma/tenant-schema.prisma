@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/@prisma-tenant/prisma/client"
+  output   = "../node_modules/@prisma-tenant/prisma/client"
 }
 
 datasource db {
@@ -19,4 +19,5 @@ model User {
   firstName    String?
   lastName     String?
   metadata     Json?
+  tenantId     String
 }

@@ -1,13 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { HealthCheck } from '@nestjs/terminus';
 import * as metadata from 'package.json';
+import { AppService } from './app.service';
 import { MainPrismaService } from './modules/prisma/main-prisma.service';
-import { TenantPrismaService } from './modules/prisma/tenant-prisma.service';
+import { TENANT_PRISMA_SERVICE, TenantPrismaService } from './modules/prisma/tenant-prisma.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private readonly mainPrisma: MainPrismaService, private readonly tenantPrisma: TenantPrismaService) {}
+  constructor(private readonly appService: AppService, private readonly mainPrisma: MainPrismaService, @Inject(TENANT_PRISMA_SERVICE) private readonly tenantPrisma: TenantPrismaService) {}
 
   @Get()
   @HealthCheck()
@@ -25,9 +25,13 @@ export class AppController {
 
   @Get('/test')
   async testDbConnections() {
-    const tenants = await this.mainPrisma.tenant.findMany();
+    /**
+     * Since we're using query extensions with the Prisma client,
+     * this query should return only the users with the column
+     * "tenantId" matching that in the request "x-tenant-code".
+     */
     const users = await this.tenantPrisma.user.findMany();
 
-    return { tenants, users };
+    return { users };
   }
 }
