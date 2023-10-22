@@ -116,8 +116,8 @@ flowchart TB
   MainDB[(MainDB)]
   Guards[[AuthGuard<br>UserGuard<br>RolesGuard]]
 
-  Client --Request--> API --> RequestLoggerMiddleware --> TenantSourceMiddleware --> Guards --> Controller --> API --Response--> Client
-  TenantSourceMiddleware---MainDB
+  Client --Request--> API --> RequestLoggerMiddleware --> TenantDatasourceMiddleware --> Guards --> Controller --> API --Response--> Client
+  TenantDatasourceMiddleware---MainDB
 ```
 
 ### Entity Relationship
@@ -160,7 +160,7 @@ erDiagram
 ```mermaid
 flowchart LR
   API((API Main))
-  APITSM[[TenantSourceMiddleware]]
+  APITSM[[TenantDatasourceMiddleware]]
   APIController[[Controller]]
   MainDb[(Main DB)]
   TenantDb1[(Tenant DB 1)]

@@ -4,7 +4,7 @@ import { BadRequestException, Injectable, NestMiddleware, NotFoundException } fr
 import { Response } from 'express';
 
 @Injectable()
-export class TenantSourceMiddleware implements NestMiddleware {
+export class TenantDatasourceMiddleware implements NestMiddleware {
   constructor(private readonly mainPrisma: MainPrismaService) {}
 
   async use(request: IRequestWithProps, response: Response, next: () => void) {
