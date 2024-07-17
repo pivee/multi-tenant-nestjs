@@ -8,6 +8,7 @@ import * as Joi from "joi";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { PrismaModule } from "./modules/prisma/prisma.module";
+import { UsersModule } from './modules/routes/users/users.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PrismaModule } from "./modules/prisma/prisma.module";
     }),
     TerminusModule,
     PrismaModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
