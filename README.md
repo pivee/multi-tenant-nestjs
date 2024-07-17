@@ -7,8 +7,8 @@ This is a starter kit for creating multi-tenant NestJS APIs using Prisma and Pos
 ### 1. Create `./.env` file
 
 ```txt
-MAIN_DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
-TENANT_DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+PUBLIC_DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=tenant"
 ```
 
 Update the database URLs as required. If the database instances do not contain the right schema, you can create that using `prisma db push` once the dependencies are ready.
@@ -35,21 +35,21 @@ pnpm start
 
 There are two `.prisma` files inside `./prisma/`.
 
-- `schema.prisma` for the Main Database
-- `tenant-schema.prisma` for the Tenant Database
+- `public-schema.prisma` for the Main Database
+- `schema.prisma` for the Tenant Database
 
 Do the necessary changes in the appropriate file and run the correct script.
 
 ### Schema changes on the Main Database
 
 ```bash
-pnpm prisma:main:push
+pnpm prisma:push:public
 ```
 
 ### Schema changes on the Tenant Database
 
 ```bash
-pnpm prisma:tenant:push
+pnpm prisma:push:tenant
 ```
 
 ## How to use the PrismaClient inside NestJS Application
@@ -57,11 +57,11 @@ pnpm prisma:tenant:push
 ### MainPrismaService
 
 ```ts
-import { MainPrismaService } from '@/modules/prisma/main-prisma.service';
+import { PublicPrismaService } from "@/modules/prisma/public-prisma.service";
 
 export class NestJSComponent {
   constructor(
-    private readonly mainPrisma: MainPrismaService,
+    private readonly prisma: PublicPrismaService,
   ) {}
 }
 ```
@@ -71,7 +71,7 @@ export class NestJSComponent {
 
 @Get('/tenants')
 async getTenants() {
-  const tenants = await this.mainPrisma.tenant.findMany();
+  const tenants = await this.prisma.tenant.findMany();
 
   return { tenants };
 }
@@ -84,7 +84,7 @@ import { TENANT_PRISMA_SERVICE, TenantPrismaService } from '@/modules/prisma/ten
 
 export class NestJSComponent {
   constructor(
-    @Inject(TENANT_PRISMA_SERVICE) private readonly tenantPrisma: TenantPrismaService
+    @Inject(TENANT_PRISMA_SERVICE) private readonly prisma: TenantPrismaService
   ) {}
 }
 ```
@@ -99,7 +99,7 @@ async getUsers() {
    * this query should return only the users with the column
    * "tenantId" matching that in the request "x-tenant-code".
    */
-  const users = await this.tenantPrisma.user.findMany();
+  const users = await this.prisma.user.findMany();
 
   return { users };
 }

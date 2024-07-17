@@ -2,15 +2,19 @@ import { Controller, Get, Inject } from '@nestjs/common';
 import { HealthCheck } from '@nestjs/terminus';
 import * as metadata from 'package.json';
 import { AppService } from './app.service';
-import { MainPrismaService } from './modules/prisma/main-prisma.service';
-import { TENANT_PRISMA_SERVICE, TenantPrismaService } from './modules/prisma/tenant-prisma.service';
+import { PublicPrismaService } from "./modules/prisma/public-prisma.service";
+import {
+  TENANT_PRISMA_SERVICE,
+  TenantPrismaService,
+} from "./modules/prisma/tenant-prisma.service";
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly mainPrisma: MainPrismaService,
-    @Inject(TENANT_PRISMA_SERVICE) private readonly tenantPrisma: TenantPrismaService
+    private readonly mainPrisma: PublicPrismaService,
+    @Inject(TENANT_PRISMA_SERVICE)
+    private readonly tenantPrisma: TenantPrismaService
   ) {}
 
   @Get()
@@ -27,14 +31,14 @@ export class AppController {
     return { app, ...healthcheck };
   }
 
-  @Get('/tenants')
+  @Get("/tenants")
   async getTenants() {
     const tenants = await this.mainPrisma.tenant.findMany();
-  
+
     return { tenants };
   }
 
-  @Get('/users')
+  @Get("/users")
   async getUsers() {
     /**
      * Since we're using query extensions with the Prisma client,

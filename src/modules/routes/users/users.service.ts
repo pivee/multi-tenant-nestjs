@@ -1,17 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PaginationOptions } from "@/core/pagination-options/pagination-options";
-import { Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma-tenant/prisma/client";
+import {
+  TENANT_PRISMA_SERVICE,
+  TenantPrismaService,
+} from "@/modules/prisma/tenant-prisma.service";
+import { Inject, Injectable } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @Inject(TENANT_PRISMA_SERVICE) private readonly prisma: TenantPrismaService
+  ) {}
+
   create(createUserDto: CreateUserDto) {
     return "This action adds a new user";
   }
 
-  findAll(where: Prisma.UserWhereInput, options: PaginationOptions) {
-    return `This action returns all users`;
+  async findAll(where: Prisma.UserWhereInput, options: PaginationOptions) {
+    return await this.prisma.user.findMany();
   }
 
   findOne(id: number) {

@@ -43,7 +43,7 @@ export class UsersController {
     required: false,
     description: "Default = 0",
   })
-  findAll(
+  async findAll(
     @Query(
       "take",
       new DefaultValuePipe(new PaginationOptions().take),
@@ -57,7 +57,9 @@ export class UsersController {
     )
     skip: number
   ) {
-    return this.usersService.findAll({}, { take, skip });
+    console.log("Finding users in controller");
+
+    return await this.usersService.findAll({}, { take, skip });
   }
 
   @Get(":id")
