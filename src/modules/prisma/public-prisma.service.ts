@@ -1,8 +1,8 @@
 import { Injectable, Logger, OnModuleInit } from "@nestjs/common";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma-public/prisma/client";
 
 @Injectable()
-export class MainPrismaService extends PrismaClient implements OnModuleInit {
+export class PublicPrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
     super({
       log: [

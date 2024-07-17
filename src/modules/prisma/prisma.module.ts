@@ -7,7 +7,7 @@ import {
   Scope,
 } from "@nestjs/common";
 import { REQUEST } from "@nestjs/core";
-import { MainPrismaService } from "./main-prisma.service";
+import { PublicPrismaService } from "./public-prisma.service";
 import {
   TENANT_PRISMA_SERVICE,
   TenantPrismaService,
@@ -15,9 +15,9 @@ import {
 
 @Global()
 @Module({
-  exports: [MainPrismaService, "TenantPrismaService"],
+  exports: [PublicPrismaService, TENANT_PRISMA_SERVICE],
   providers: [
-    MainPrismaService,
+    PublicPrismaService,
     {
       provide: TENANT_PRISMA_SERVICE,
       scope: Scope.REQUEST,
