@@ -12,7 +12,7 @@ import {
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly mainPrisma: PublicPrismaService,
+    private readonly publicPrisma: PublicPrismaService,
     @Inject(TENANT_PRISMA_SERVICE)
     private readonly tenantPrisma: TenantPrismaService,
   ) {}
@@ -33,7 +33,7 @@ export class AppController {
 
   @Get("/tenants")
   async getTenants() {
-    const tenants = await this.mainPrisma.tenant.findMany();
+    const tenants = await this.publicPrisma.tenant.findMany();
 
     return { tenants };
   }

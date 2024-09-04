@@ -5,12 +5,12 @@ import { Response } from "express";
 
 @Injectable()
 export class TenantDatasourceMiddleware implements NestMiddleware {
-  constructor(private readonly prisma: PublicPrismaService) {}
+  constructor(private readonly publicPrisma: PublicPrismaService) {}
 
   async use(request: IRequestWithProps, response: Response, next: () => void) {
     const tenantCode = request.headers["x-tenant-code"] as string;
 
-    const tenant = await this.prisma.tenant.findFirst({
+    const tenant = await this.publicPrisma.tenant.findFirst({
       include: { datasource: true },
       where: { code: tenantCode },
     });
