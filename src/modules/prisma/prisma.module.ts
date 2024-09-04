@@ -34,7 +34,7 @@ import {
         }
 
         return new TenantPrismaService(datasourceUrl).withQueryExtensions(
-          tenantCode
+          tenantCode,
         );
       },
     },

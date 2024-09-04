@@ -1,5 +1,5 @@
-import { IRequestWithProps } from '@/types/IRequestWithProps';
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { IRequestWithProps } from "@/types/IRequestWithProps";
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
 
 export const UserInRequest = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {

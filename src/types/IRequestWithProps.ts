@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request } from "express";
 
 export interface IRequestWithProps extends Request {
   auth?: any;
@@ -7,5 +7,5 @@ export interface IRequestWithProps extends Request {
   tenant?: {
     tenantCode?: string;
     datasourceUrl?: string;
-  }
+  };
 }

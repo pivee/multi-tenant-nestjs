@@ -1,7 +1,7 @@
-import { Controller, Get, Inject } from '@nestjs/common';
-import { HealthCheck } from '@nestjs/terminus';
-import * as metadata from 'package.json';
-import { AppService } from './app.service';
+import { Controller, Get, Inject } from "@nestjs/common";
+import { HealthCheck } from "@nestjs/terminus";
+import * as metadata from "package.json";
+import { AppService } from "./app.service";
 import { PublicPrismaService } from "./modules/prisma/public-prisma.service";
 import {
   TENANT_PRISMA_SERVICE,
@@ -14,7 +14,7 @@ export class AppController {
     private readonly appService: AppService,
     private readonly mainPrisma: PublicPrismaService,
     @Inject(TENANT_PRISMA_SERVICE)
-    private readonly tenantPrisma: TenantPrismaService
+    private readonly tenantPrisma: TenantPrismaService,
   ) {}
 
   @Get()

@@ -12,7 +12,7 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(TENANT_PRISMA_SERVICE) private readonly prisma: TenantPrismaService
+    @Inject(TENANT_PRISMA_SERVICE) private readonly prisma: TenantPrismaService,
   ) {}
 
   create(createUserDto: CreateUserDto) {

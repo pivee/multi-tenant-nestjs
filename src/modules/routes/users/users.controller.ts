@@ -47,15 +47,15 @@ export class UsersController {
     @Query(
       "take",
       new DefaultValuePipe(new PaginationOptions().take),
-      ParseIntPipe
+      ParseIntPipe,
     )
     take: number,
     @Query(
       "skip",
       new DefaultValuePipe(new PaginationOptions().skip),
-      ParseIntPipe
+      ParseIntPipe,
     )
-    skip: number
+    skip: number,
   ) {
     console.log("Finding users in controller");
 

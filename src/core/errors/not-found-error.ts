@@ -1,5 +1,5 @@
 export class NotFoundError extends Error {
-  constructor(public message = 'Entity not found') {
+  constructor(public message = "Entity not found") {
     super(message);
   }
 }

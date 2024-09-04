@@ -1,1 +1,1 @@
-export type IUserRole = 'ADMIN' | 'MANAGER' | 'USER';
+export type IUserRole = "ADMIN" | "MANAGER" | "USER";

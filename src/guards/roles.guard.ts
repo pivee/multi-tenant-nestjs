@@ -1,8 +1,8 @@
-import { RolesAllowed } from '@/decorators/roles-allowed.decorator';
-import { IRequestWithProps } from '@/types/IRequestWithProps';
-import { IUserRole } from '@/types/IUserRole';
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import { RolesAllowed } from "@/decorators/roles-allowed.decorator";
+import { IRequestWithProps } from "@/types/IRequestWithProps";
+import { IUserRole } from "@/types/IUserRole";
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
 
 function matchRoles(rolesRequired: IUserRole[], userRole: IUserRole) {
   return rolesRequired.includes(userRole);
@@ -13,7 +13,10 @@ export class RolesGuard implements CanActivate {
   constructor(protected reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const isPublicRoute = this.reflector.get<boolean>("allowPublicAccess", context.getHandler());
+    const isPublicRoute = this.reflector.get<boolean>(
+      "allowPublicAccess",
+      context.getHandler(),
+    );
     if (isPublicRoute) return true;
 
     const request: IRequestWithProps = context.switchToHttp().getRequest();

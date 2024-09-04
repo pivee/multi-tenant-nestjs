@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
 
 export class Metadata<T> {
   @ApiProperty({ required: false })
@@ -19,7 +19,7 @@ export class Metadata<T> {
   @ApiProperty({ required: false })
   currentPage?: number;
 
-  constructor(data: T, options: Partial<Omit<Metadata<T>, 'data'>> = {}) {
+  constructor(data: T, options: Partial<Omit<Metadata<T>, "data">> = {}) {
     if (Array.isArray(data)) {
       this.count = data.length;
     }
