@@ -35,12 +35,12 @@ pnpm start
 
 There are two `.prisma` files inside `./prisma/`.
 
-- `public-schema.prisma` for the Main Database
+- `public-schema.prisma` for the Public Database
 - `schema.prisma` for the Tenant Database
 
 Do the necessary changes in the appropriate file and run the correct script.
 
-### Schema changes on the Main Database
+### Schema changes on the Public Database
 
 ```bash
 pnpm prisma:push:public
@@ -54,7 +54,7 @@ pnpm prisma:push:tenant
 
 ## How to use the PrismaClient inside NestJS Application
 
-### MainPrismaService
+### PublicPrismaService
 
 ```ts
 import { PublicPrismaService } from "@/modules/prisma/public-prisma.service";
@@ -113,18 +113,18 @@ async getUsers() {
 flowchart TB
   Client((Client))
   API((API))
-  MainDB[(MainDB)]
+  PublicDB[(PublicDB)]
   Guards[[AuthGuard<br>UserGuard<br>RolesGuard]]
 
   Client --Request--> API --> RequestLoggerMiddleware --> TenantDatasourceMiddleware --> Guards --> Controller --> API --Response--> Client
-  TenantDatasourceMiddleware---MainDB
+  TenantDatasourceMiddleware---PublicDB
 ```
 
 ### Entity Relationship
 
 ```mermaid
 erDiagram
-    Main--Tenant {
+    Public--Tenant {
         int id PK
         string code
         string name
@@ -132,7 +132,7 @@ erDiagram
         json metadata
         int datasourceId FK
     }
-    Main--Datasource {
+    Public--Datasource {
         int id PK
         string name
         string url
@@ -143,15 +143,15 @@ erDiagram
         any key
         int tenantId FK
     }
-    Main--Tenant ||--o| Main--Datasource : has
-    Main--Tenant ||--o{ TenantDBX--Entity : has
+    Public--Tenant ||--o| Public--Datasource : has
+    Public--Tenant ||--o{ TenantDBX--Entity : has
 ```
 
 ### Data
 
 #### Datasources
 
-| Datasource    | Main DB  | Tenant DB 1 | Tenant DB 2 | Tenant DB 3 |
+| Datasource    | Public DB  | Tenant DB 1 | Tenant DB 2 | Tenant DB 3 |
 | ------------- | -------- | ----------- | ----------- | ----------- |
 | **Tenant(s)** | Metadata | A<br>B<br>C | D<br>E<br>F | G<br>H<br>I |
 
@@ -159,10 +159,10 @@ erDiagram
 
 ```mermaid
 flowchart LR
-  API((API Main))
+  API((API Public))
   APITSM[[TenantDatasourceMiddleware]]
   APIController[[Controller]]
-  MainDb[(Main DB)]
+  PublicDb[(Public DB)]
   TenantDb1[(Tenant DB 1)]
   TenantDb2[(Tenant DB 2)]
   TenantDb3[(Tenant DB 3)]
@@ -175,7 +175,7 @@ flowchart LR
   ClientG[Client G]
   ClientH[Client I]
 
-  API <--(1)--> APITSM <--Get datasourceUrl--> MainDb
+  API <--(1)--> APITSM <--Get datasourceUrl--> PublicDb
   API --(2)--> APIController
   ClientA --Data A--> API
   ClientB --Data B--> API
